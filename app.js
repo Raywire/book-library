@@ -15,11 +15,18 @@ app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist/')
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-app.get('/views', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/index.html'));
-});
+const nav = [{ link: '/books', title: 'Books' }, { link: '/authors', title: 'Authors' }];
+const bookRouter = require('./src/routes/bookRoutes')(nav);
+
+app.use('/books', bookRouter);
 app.get('/', (req, res) => {
-  res.render('index', { title: 'library' });
+  res.render(
+    'index',
+    {
+      nav: [{ link: '/books', title: 'Books' }, { link: '/authors', title: 'Authors' }],
+      title: 'Library'
+    }
+  );
 });
 
 app.listen(port, () => {
