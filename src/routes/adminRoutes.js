@@ -59,7 +59,11 @@ function router(nav) {
       (async function mongo() {
         let client;
         try {
-          client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+          client = await MongoClient.connect(url,
+            {
+              useNewUrlParser: true,
+              useUnifiedTopology: true
+            });
           debug('connected correctly to server');
 
           const db = client.db(dbName);
