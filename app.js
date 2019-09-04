@@ -4,7 +4,6 @@ const debug = require('debug')('app');
 const morgan = require('morgan');
 const path = require('path');
 const bodyParser = require('body-parser');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 require('dotenv').config();
@@ -16,7 +15,7 @@ app.use(morgan('tiny')); // you can use 'combined'
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({ secret: 'library' }));
+app.use(session({ secret: 'library', resave: true, saveUninitialized: true }));
 
 require('./src/config/passport.js')(app);
 
