@@ -1,7 +1,7 @@
 const { MongoClient, ObjectID } = require('mongodb');
 const debug = require('debug')('app:bookContoller');
 
-function bookContoller(nav) {
+function bookContoller(bookService, nav) {
   function getIndex(req, res) {
     const url = 'mongodb://localhost:27017';
     const dbName = 'libraryApp';
@@ -53,6 +53,8 @@ function bookContoller(nav) {
         });
 
         debug(book);
+
+        book.details = await bookService.getBookById(book.bookId);
         res.render(
           'bookView',
           {
